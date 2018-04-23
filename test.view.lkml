@@ -4,4 +4,9 @@ view: test {
 dimension: test {
   type:  string
 }
+
+dimension: test_2 {
+  type: string
+}
+
 }
