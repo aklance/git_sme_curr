@@ -5,6 +5,9 @@ view: test {
     type:  string
   }
 
+  dimension: test_3 {
+    type:  string
+  }
 
 
 
