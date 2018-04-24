@@ -9,4 +9,8 @@ dimension: test_2 {
   type: string
 }
 
+dimension: test_3 {
+  type: string
+}
+
 }
