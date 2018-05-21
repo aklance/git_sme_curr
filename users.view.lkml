@@ -67,6 +67,18 @@ view: users {
     sql: ${TABLE}.zip ;;
   }
 
+
+  dimension: link_date {
+    type: date
+    sql: now(${created_raw}) ;;
+  }
+#   dimension: dummy_link {
+#     html: {{ linked_value }}
+#     <a href="/looks/5?={{ value | url_encode }}&Created%20Date= {{ value }}" target="_new">
+#     <img src="/images/qr-graph-line@2x.png" height=20 width=20> </a> ;;
+
+
+
   measure: count {
     type: count
     drill_fields: [detail*]
