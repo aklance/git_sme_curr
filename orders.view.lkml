@@ -21,7 +21,7 @@ view: orders {
     sql: ${TABLE}.created_at ;;
   }
 
-  dimension: test {
+  dimension: test2 {
 
   }
 
