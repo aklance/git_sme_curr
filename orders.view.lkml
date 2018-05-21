@@ -27,6 +27,8 @@ view: orders {
 
   dimension: stuff {}
 
+dimension: hello{}
+
   dimension: status {
     type: string
     sql: ${TABLE}.status ;;
