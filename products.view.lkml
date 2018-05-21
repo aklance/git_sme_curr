@@ -72,6 +72,10 @@ dimension: cost {
     sql: {% parameter testing_delimited_input %}  ;;
   }
 
+dimension: test1 {
+
+}
+
   dimension: sku {
     type: string
     sql: ${TABLE}.sku ;;
