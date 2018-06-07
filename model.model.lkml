@@ -75,6 +75,13 @@ explore: user_data {
   }
 }
 
-explore: users {}
+explore: users {
+#   join: testingpdt {
+#     type: left_outer
+#     sql_on:  ${testingpdt.user_id} = ${users.id} ;;
+#   }
+}
+
+explore: testingdt {}
 
 explore: users_nn {}

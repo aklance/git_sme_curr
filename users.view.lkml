@@ -37,9 +37,18 @@ view: users {
     sql: ${TABLE}.created_at ;;
   }
 
+  dimension: created_formatted {
+    type:  date
+    sql: DATE_FORMAT(${created_raw}, "%M %d %Y")  ;;
+  }
+
+
   dimension: email {
+    label: "desc > 15"
     type: string
-    sql: ${TABLE}.email ;;
+    sql: case when length(${TABLE}.email) >=40 THEN ${TABLE}.email
+    else null
+    end;;
   }
 
   dimension: first_name {
@@ -60,7 +69,21 @@ view: users {
   dimension: state {
     type: string
     sql: ${TABLE}.state ;;
-  }
+    map_layer_name: us_states
+}
+
+measure: test {
+  type: average
+  sql:${age} ;;
+  html:
+  {% if value = 0 %}
+  <a style="background-color=white">{{ rendered_value }}</a>
+  {% elsif value > 0 %}
+  <a style="background-color=green">{{ rendered_value }}</a>
+  {% else %}
+  <a style="background-color=red">{{ rendered_value }}</a>
+  {% endif %} ;;
+}
 
   dimension: zip {
     type: zipcode
@@ -77,11 +100,39 @@ view: users {
 #     <a href="/looks/5?={{ value | url_encode }}&Created%20Date= {{ value }}" target="_new">
 #     <img src="/images/qr-graph-line@2x.png" height=20 width=20> </a> ;;
 
+measure: age_vs_avg_age {
+  case: {
+    when: {
+      sql:  ${age} > ${avg_age} ;;
+      label: "Age Above Average"
+      }
+    when: {
+      sql: ${age} < ${avg_age} ;;
+      label: "Age Below Average"
+      }
+    when: {
+      sql: ${age} = ${avg_age} ;;
+      label: "Age Equals Average"
+    }
+    else: "null"
+    }
+  }
 
 
   measure: count {
     type: count
     drill_fields: [detail*]
+  }
+
+  measure: count_age {
+    type:  count_distinct
+    sql: ${age} ;;
+  }
+
+  measure: avg_age {
+    type:  average
+    sql:  ${age} ;;
+    value_format: ""
   }
 
   # ----- Sets of fields for drilling ------
