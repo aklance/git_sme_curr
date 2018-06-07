@@ -44,7 +44,10 @@ dimension: cost {
 
   dimension: department {
     type: string
-    sql: ${TABLE}.department ;;
+    sql:  CASE when ${TABLE}.department = 'Women' THEN '001'
+    when ${TABLE}.department = 'Men' THEN '002'
+    ELSE null
+    END ;;
   }
 
   dimension: item_name {
@@ -64,8 +67,8 @@ dimension: cost {
     html:   <a></a> ;;
   }
 
-  parameter: testing_delimited_input {
-
+ filter: testing_delimited_input {
+    suggestions: ["a", "b", "c"]
   }
 
   dimension: delimited_input_array {

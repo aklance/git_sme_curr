@@ -50,3 +50,8 @@ dimension: hello{}
     sql: Count(${user_id}) ;;
   }
 }
+
+
+view: products2 {
+  sql_table_name: demo_db.products ;;
+}
