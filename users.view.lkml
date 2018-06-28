@@ -3,7 +3,7 @@ view: users {
 
   dimension: id {
     primary_key: yes
-    type: number
+    type: string
     sql: ${TABLE}.id ;;
   }
 
@@ -132,7 +132,7 @@ measure: age_vs_avg_age {
   measure: avg_age {
     type:  average
     sql:  ${age} ;;
-    value_format: ""
+
   }
 
   # ----- Sets of fields for drilling ------

@@ -9,3 +9,4 @@
     - name: hello_world
       type: looker_column
       explore: products
+      __FILE:

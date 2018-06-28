@@ -44,8 +44,8 @@ dimension: cost {
 
   dimension: department {
     type: string
-    sql:  CASE when ${TABLE}.department = 'Women' THEN '001'
-    when ${TABLE}.department = 'Men' THEN '002'
+    sql:  CASE when ${TABLE}.department = 'Women' THEN 'Dept-Women'
+    when ${TABLE}.department = 'Men' THEN 'Dept-men'
     ELSE null
     END ;;
   }

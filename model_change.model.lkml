@@ -76,10 +76,11 @@ explore: user_data {
 }
 
 explore: users {
-#   join: testingpdt {
-#     type: left_outer
-#     sql_on:  ${testingpdt.user_id} = ${users.id} ;;
-#   }
+  join: testingdt {
+    type: left_outer
+    sql_on:  ${testingdt.user_id} = ${users.id} ;;
+    relationship: one_to_one
+  }
 }
 
 explore: testingdt {}
