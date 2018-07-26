@@ -42,6 +42,11 @@ view: users {
     sql: DATE_FORMAT(${created_raw}, "%M %d %Y")  ;;
   }
 
+  dimension: test_15 {
+    type: date_minute15
+    sql: ${created_raw} ;;
+  }
+
 
   dimension: email {
     label: "desc > 15"

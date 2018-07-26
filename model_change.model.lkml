@@ -14,6 +14,10 @@ datagroup: project_2_default_datagroup {
 persist_with: project_2_default_datagroup
 
 explore: events {
+  access_filter: {
+    field: users.id
+    user_attribute: id
+  }
   join: users {
     type: left_outer
     sql_on: ${events.user_id} = ${users.id} ;;

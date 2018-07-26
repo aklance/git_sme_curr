@@ -89,6 +89,18 @@ dimension: test1 {
     drill_fields: [id, item_name, inventory_items.count]
   }
 
+
+  measure: distinct_rt {
+    type: count_distinct
+    sql:  ${retail_price} ;;
+  }
+  measure: count_bucket_test {
+    type: string
+    sql:
+    case when ${distinct_rt} between 0 and 500 THEN '1-5'
+    when ${distinct_rt} > 500 THEN '5-10' ELSE null END;;
+  }
+
   measure: cost_coalesce {
 
   }
