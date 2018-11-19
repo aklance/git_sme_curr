@@ -10,6 +10,8 @@ DATE(users.created_at ) AS created_date,
       END AS 'users.age_vs_avg_age'
       FROM demo_db.users
       group by id;;
+
+      datagroup_trigger: project_2_default_datagroup
   }
 
 dimension: average_age {

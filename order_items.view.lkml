@@ -42,4 +42,9 @@ view: order_items {
     type: count
     drill_fields: [id, inventory_items.id, orders.id]
   }
+
+  measure: median_price {
+    type: median
+    sql:  ${sale_price} ;;
+  }
 }

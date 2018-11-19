@@ -7,8 +7,8 @@ include: "*.view"
 include: "*.dashboard"
 
 datagroup: project_2_default_datagroup {
-  # sql_trigger: SELECT MAX(id) FROM etl_log;;
-  max_cache_age: "1 hour"
+  sql_trigger:SELECT FLOOR(UNIX_TIMESTAMP() / (0.08333333*60*60));;
+  max_cache_age: "5 minutes"
 }
 
 persist_with: project_2_default_datagroup
@@ -67,7 +67,9 @@ explore: orders {
   }
 }
 
-explore: products {}
+explore: products {
+  sql_always_where: {{ products.department }};;
+}
 
 explore: schema_migrations {}
 
@@ -88,5 +90,7 @@ explore: users {
 }
 
 explore: testingdt {}
+
+explore: test {}
 
 explore: users_nn {}

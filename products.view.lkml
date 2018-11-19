@@ -10,6 +10,7 @@ view: products {
   dimension: brand {
     type: string
     sql: ${TABLE}.brand ;;
+    suggest_dimension: brand
 #     link: {
 #       label: "Look Link"
 #       url: "/looks/5=&f[products.brand]={{ _user_attributes['test1'] }}&f[users.created_date]={{ 7 days }}"
@@ -17,6 +18,12 @@ view: products {
 #     }
     }
 
+parameter: test_dash_filter {
+  allowed_value: {
+    label: "test"
+    value: "test"
+  }
+}
 dimension: look_link {
     sql: ${brand} ;;
     html: <a href="/looks/5=&f[products.brand]={{ _user_attributes['test1'] }}&f[users.created_date]={{ 7 days }}">
@@ -24,9 +31,11 @@ dimension: look_link {
 }
 
 #   https://localhost:99 99/explore/model/order_items?fields=users.created_date,products.brand&f[products.brand]=%7B%7B+_user_attributes%5B%27test1%27%5D+%7D%7D&f[users.created_date]=7+days&sorts=users.created_date+desc&limit=500&vis=%7B%22type%22%3A%22table%22%2C%22show_view_names%22%3Atrue%2C%22show_row_numbers%22%3Atrue%2C%22truncate_column_names%22%3Afalse%2C%22hide_totals%22%3Afalse%2C%22hide_row_totals%22%3Afalse%2C%22table_theme%22%3A%22editable%22%2C%22limit_displayed_rows%22%3Afalse%2C%22enable_conditional_formatting%22%3Afalse%2C%22conditional_formatting_include_totals%22%3Afalse%2C%22conditional_formatting_include_nulls%22%3Afalse%7D&filter_config=%7B%22products.brand%22%3A%5B%7B%22type%22%3A%22user_attribute%22%2C%22values%22%3A%5B%7B%22constant%22%3A%22test1%22%7D%2C%7B%7D%5D%2C%22id%22%3A4%2C%22error%22%3Afalse%7D%5D%2C%22users.created_date%22%3A%5B%7B%22type%22%3A%22advanced%22%2C%22values%22%3A%5B%7B%22constant%22%3A%227+days%22%2C%22unit%22%3A%22day%22%2C%22tmp%22%3A%227+days%22%7D%2C%7B%7D%5D%2C%22id%22%3A2%2C%22error%22%3Afalse%7D%5D%7D&origin=share-expanded
-dimension: cost {
-  sql:  ${TABLE}.cost ;;
-}
+# dimension: cost {
+#   type:  string
+#   sql:  ${TABLE}.cost ;;
+#   suggest_dimension: cost
+# }
   dimension: category {
     type: string
     sql: ${TABLE}.category ;;
@@ -44,10 +53,11 @@ dimension: cost {
 
   dimension: department {
     type: string
-    sql:  CASE when ${TABLE}.department = 'Women' THEN 'Dept-Women'
-    when ${TABLE}.department = 'Men' THEN 'Dept-men'
-    ELSE null
-    END ;;
+    sql:${TABLE}.department ;;
+    link: {
+      label: "bloop"
+      url: "https://localhost:9999/dashboards/1?Department={{ value | url_encode }}"
+  }
   }
 
   dimension: item_name {
@@ -64,7 +74,7 @@ dimension: cost {
   dimension: retail_price {
     type: number
     sql: ${TABLE}.retail_price ;;
-    html:   <a></a> ;;
+    hidden:  yes
   }
 
  filter: testing_delimited_input {
@@ -75,8 +85,16 @@ dimension: cost {
     sql: {% parameter testing_delimited_input %}  ;;
   }
 
-dimension: test1 {
+measure: test_sum {
+  type: sum
+  sql:  ${retail_price} ;;
 
+}
+
+measure: testing_grouping {
+  type:  number
+  sql:  ${TABLE}.retail_price ;;
+  value_format_name: percent_1
 }
 
   dimension: sku {
@@ -94,11 +112,13 @@ dimension: test1 {
     type: count_distinct
     sql:  ${retail_price} ;;
   }
+
   measure: count_bucket_test {
     type: string
     sql:
-    case when ${distinct_rt} between 0 and 500 THEN '1-5'
-    when ${distinct_rt} > 500 THEN '5-10' ELSE null END;;
+    case ${count} < 1 then '12'
+    when ${count} > 100 then '15'
+    when ${count} > 500 THEN '16' ELSE null END;;
   }
 
   measure: cost_coalesce {
