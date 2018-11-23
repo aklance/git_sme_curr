@@ -12,6 +12,7 @@ DATE(users.created_at ) AS created_date,
       group by id;;
 
       datagroup_trigger: project_2_default_datagroup
+      indexes: ["id"]
   }
 
 dimension: average_age {
