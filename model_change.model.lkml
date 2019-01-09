@@ -25,12 +25,40 @@ explore: events {
   }
 }
 
+explore: events_2 {
+  from: events
+  access_filter: {
+    field: users.id
+    user_attribute: id
+  }
+  join: users {
+    type: left_outer
+    sql_on: ${events_2.user_id} = ${users.id} ;;
+    relationship: many_to_one
+  }
+}
+
 explore: inventory_items {
+
+
   join: products {
     type: left_outer
     sql_on: ${inventory_items.product_id} = ${products.id} ;;
     relationship: many_to_one
   }
+
+  always_filter: {
+    filters: {
+      field: products.test_dash_filter
+      value: "test"
+
+    }
+    }
+}
+
+explore: ndt_orders_test {
+  from:  ndt_orders
+
 }
 
 explore: order_items {
@@ -60,7 +88,10 @@ explore: order_items {
 }
 
 explore: orders {
+#   hidden: yes
+
   join: users {
+#     fields: []
     type: left_outer
     sql_on: ${orders.user_id} = ${users.id} ;;
     relationship: many_to_one

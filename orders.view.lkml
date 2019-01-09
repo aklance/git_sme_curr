@@ -5,7 +5,13 @@ view: orders {
     primary_key: yes
     type: number
     sql: ${TABLE}.id ;;
+    html: {{ status._value }} ;;
 
+  }
+
+  dimension: status {
+    type: string
+    sql: ${TABLE}.status ;;
   }
 
 filter: the_day {
@@ -54,11 +60,7 @@ filter: the_day {
 
 dimension: hello{}
 
-  dimension: status {
-    type: string
-    sql: ${TABLE}.status ;;
-#     suggest_dimension: orders.STATUS
-  }
+
 
   dimension: user_id {
     type: number
@@ -68,8 +70,11 @@ dimension: hello{}
 
   measure: count {
     type: count
-    drill_fields: [id, users.first_name, users.last_name, users.id, order_items.count]
-    description: "hello"
+    drill_fields: [id, users.first_name, users.last_name, users.id, order_items.count, created_date]
+    filters: {
+      field:  created_date
+      value: "-NULL"
+    }
 
   }
   parameter: filter_date {
@@ -86,6 +91,10 @@ dimension: hello{}
 
     }
 
+measure: sum_two_dimesnions {
+  type: sum
+  sql: ${id} + ${user_id} ;;
+  }
 
 filter: date_filter {
   type: date

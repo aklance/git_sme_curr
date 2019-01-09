@@ -8,7 +8,8 @@ DATE(users.created_at ) AS created_date,
       WHEN users.age = (SELECT ROUND(AVG(age)) FROM demo_db.users)  THEN 'Age Equals Average'
       ELSE 'null'
       END AS 'users.age_vs_avg_age'
-      FROM demo_db.users
+      FROM demo_db.users users
+      where {% condition testingdt.user_id_temp_filter %} users.id {% endcondition %}
       group by id;;
 
       datagroup_trigger: project_2_default_datagroup
@@ -18,6 +19,10 @@ DATE(users.created_at ) AS created_date,
 dimension: average_age {
   type:  number
   sql: ${TABLE}.average_age ;;
+}
+
+filter: user_id_temp_filter {
+  type:  number
 }
 
 dimension: age {

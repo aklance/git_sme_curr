@@ -23,6 +23,10 @@ parameter: test_dash_filter {
     label: "test"
     value: "test"
   }
+  allowed_value: {
+    label: "untest"
+    value: "untest"
+  }
 }
 dimension: look_link {
     sql: ${brand} ;;
@@ -116,7 +120,7 @@ measure: testing_grouping {
   measure: count_bucket_test {
     type: string
     sql:
-    case ${count} < 1 then '12'
+    case when ${count} < 1 then concat(${brand},,'12')
     when ${count} > 100 then '15'
     when ${count} > 500 THEN '16' ELSE null END;;
   }
