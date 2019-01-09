@@ -18,10 +18,10 @@ include: "*.view.lkml"                       # include all views in this project
 #   }
 # }
 
-datagroup: project_2_default_datagroup {
- sql_trigger: SELECT FLOOR(UNIX_TIMESTAMP() / (0.0833333333*60*60));;
-  max_cache_age: "5 minutes"
-}
-persist_with: project_2_default_datagroup
-
-explore: testingdt {}
+# datagroup: project_2_default_datagroup {
+#  sql_trigger: SELECT FLOOR(UNIX_TIMESTAMP() / (0.0833333333*60*60));;
+#   max_cache_age: "5 minutes"
+# }
+# persist_with: project_2_default_datagroup
+#
+# explore: testingdt {}
