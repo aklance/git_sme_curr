@@ -9,7 +9,7 @@ DATE(users.created_at ) AS created_date,
       ELSE 'null'
       END AS 'users.age_vs_avg_age'
       FROM demo_db.users users
-      where {% condition testingdt.user_id_temp_filter %} users.id {% endcondition %}
+      where {% condition user_id_temp_filter %} users.id {% endcondition %}
       group by id;;
 
       datagroup_trigger: project_2_default_datagroup
