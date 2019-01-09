@@ -11,8 +11,9 @@ DATE(users.created_at ) AS created_date,
       FROM demo_db.users users
       where {% condition user_id_temp_filter %} users.id {% endcondition %}
       group by id;;
-      sql_trigger_value: SELECT FLOOR(UNIX_TIMESTAMP() / (0.08333333*60*60));;
+#       sql_trigger_value: SELECT FLOOR(UNIX_TIMESTAMP() / (0.08333333*60*60));;
 #       datagroup_trigger: project_2_default_datagroup
+persist_for: "10 minutes"
       indexes: ["id"]
   }
 
