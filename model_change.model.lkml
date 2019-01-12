@@ -98,9 +98,8 @@ explore: orders {
   }
 }
 
-explore: products {
-  sql_always_where: {{ products.department }};;
-}
+explore: products {}
+
 
 explore: schema_migrations {}
 

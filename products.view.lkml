@@ -117,13 +117,24 @@ measure: testing_grouping {
     sql:  ${retail_price} ;;
   }
 
-  measure: count_bucket_test {
-    type: string
-    sql:
-    case when ${count} < 1 then concat(${brand},,'12')
-    when ${count} > 100 then '15'
-    when ${count} > 500 THEN '16' ELSE null END;;
-  }
+dimension: count_bucket_test {
+  type:  string
+sql:
+    case
+    when ${id} > 1 then concat(${brand}, " " ,"> 1")
+    ELSE null END ;;
+
+# sql: {% if products.count._value < 1 %}
+#       concat(products.category, " ", "< 1")
+#     {% elsif products.count._value > 1 %}
+#       concat(products.category, " ", "> 1")
+#     {% endif %} ;;
+#   }
+# sql:  case when ${count} < 1 then "< 1" else null end ;;
+
+
+
+}
 
   measure: cost_coalesce {
 
