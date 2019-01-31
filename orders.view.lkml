@@ -101,6 +101,20 @@ filter: date_filter {
 }
 # Next, we will create a hidden dimension with templated filters designed to capture whatever input the user selects in this filter only field:
 
+  measure: test_liquid {
+    type:  number
+    sql:
+    {% if orders._in_query %}
+    case when count(orders.user_id) < 30 then count(orders.user_id) else null end
+    {% else %}
+     count(orders.user_id)
+    {% endif %} ;;
+  }
+
+measure: test_count_user_id {
+  type:  count_distinct
+  sql:${user_id} ;;
+}
 dimension: status_satisfies_filter {
 type: yesno
 hidden: yes
